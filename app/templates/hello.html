@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %} 
+    {{ super() }}
+    Bienvenido 
+{% endblock %}
+
+{% block content %}
+    <!-- <h1>Hello world template</h1> -->
+    {% if username %}
+        <h2>Welcome, {{ username | capitalize }} </h2>
+    {% endif %}
+    {% if user_ip %}
+        <!-- <h2>Your IP direction: {{ user_ip }}</h2> -->
+    {% else %}
+        <a href="{{ url_for('index') }}">Home</a>
+    {% endif %}
+
+    <div class="container">
+        <h2>Create new task</h2>
+        {{ wtf.quick_form(todo_form) }}
+    </div>
+
+    <ul class="list-group">
+        {% for todo in todos %}
+            {{ macros.render_todo(todo, delete_form, update_form) }}
+        {% endfor %}
+    </ul>
+{% endblock %}
